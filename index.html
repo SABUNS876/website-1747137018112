@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Payment Options</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+  }
+  .payment-container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    width: 350px;
+    max-width: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+  }
+  h1 {
+    text-align: center;
+    color: #222222;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 1.8rem;
+  }
+  .payment-methods {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .method-button {
+    flex: 1;
+    margin: 0 6px;
+    background: #e9ecef;
+    border-radius: 8px;
+    padding: 12px 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #495057;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .method-button:first-child {
+    margin-left: 0;
+  }
+  .method-button:last-child {
+    margin-right: 0;
+  }
+  .method-button:hover,
+  .method-button.active {
+    background: #007bff;
+    color: #fff;
+  }
+  .pay-button {
+    background: #28a745;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 14px 0;
+    border-radius: 10px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .pay-button:hover {
+    background: #218838;
+  }
+  @media (max-width: 400px) {
+    .payment-container {
+      width: 100%;
+      padding: 20px;
+    }
+    .payment-methods {
+      flex-direction: column;
+    }
+    .method-button {
+      margin: 6px 0;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="payment-container" role="main">
+    <h1>Pilih Metode Pembayaran</h1>
+    <div class="payment-methods" role="list">
+      <button class="method-button active" data-method="ovo" aria-pressed="true" role="listitem">OVO</button>
+      <button class="method-button" data-method="gopay" aria-pressed="false" role="listitem">GoPay</button>
+      <button class="method-button" data-method="dana" aria-pressed="false" role="listitem">Dana</button>
+      <button class="method-button" data-method="shopeepay" aria-pressed="false" role="listitem">ShopeePay</button>
+    </div>
+    <button class="pay-button" id="payButton" type="button" aria-live="polite">Bayar dengan OVO</button>
+  </div>
+
+<script>
+  (function(){
+    const buttons = document.querySelectorAll('.method-button');
+    const payButton = document.getElementById('payButton');
+    let selectedMethod = 'ovo';
+
+    function updateSelection(method) {
+      selectedMethod = method;
+      buttons.forEach(btn => {
+        if (btn.dataset.method === method) {
+          btn.classList.add('active');
+          btn.setAttribute('aria-pressed', 'true');
+        } else {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-pressed', 'false');
+        }
+      });
+      payButton.textContent = 'Bayar dengan ' + method.charAt(0).toUpperCase() + method.slice(1);
+    }
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        updateSelection(button.dataset.method);
+      });
+      button.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          updateSelection(button.dataset.method);
+        }
+      });
+    });
+
+    payButton.addEventListener('click', () => {
+      alert('Pembayaran dengan ' + selectedMethod.charAt(0).toUpperCase() + selectedMethod.slice(1) + ' akan diproses.');
+    });
+  })();
+</script>
+</body>
+</html>
+
+```
